@@ -1,0 +1,52 @@
+apply plugin: 'java' // Required for Kotlin integration
+apply plugin: 'kotlin' // Required for Kotlin integration
+apply plugin: "kotlin-spring" // See https://kotlinlang.org/docs/reference/compiler-plugins.html#kotlin-spring-compiler-plugin
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+sourceSets {
+	main.kotlin.srcDirs += 'src/monitor/kotlin'
+	test.kotlin.srcDirs += 'src/test-api/kotlin'
+	test.kotlin.srcDirs += 'src/test-integration/kotlin'
+}
+
+buildscript {
+	ext.kotlin_version = '1.2.21' // Required for Kotlin integration
+	ext.spring_boot_version = '2.0.0.RELEASE'
+	repositories {
+		jcenter()
+	}
+	dependencies {
+		classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version" // Required for Kotlin integration
+		classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version" // See https://kotlinlang.org/docs/reference/compiler-plugins.html#kotlin-spring-compiler-plugin
+		classpath "org.springframework.boot:spring-boot-gradle-plugin:2.0.0.RELEASE"
+	}
+}
+
+jar {
+	baseName = 'city-api'
+}
+
+repositories {
+	jcenter()
+}
+
+dependencies {
+	compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version" // Required for Kotlin integration
+	compile "org.springframework.boot:spring-boot-starter-web:$spring_boot_version"
+	compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+	compile "org.springframework.boot:spring-boot-starter-data-jpa:$spring_boot_version"
+	compile 'com.github.kittinunf.fuel:fuel:1.12.1'
+	compile 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.22.5'
+	compile 'org.springframework.boot:spring-boot-starter-actuator'
+	runtime 'mysql:mysql-connector-java:8.0.11'
+	testCompile 'com.h2database:h2'
+	testCompile("org.springframework.boot:spring-boot-starter-test:$spring_boot_version")
+	testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+	testCompile 'com.ninja-squad:DbSetup-kotlin:2.1.0'
+	testCompile 'org.assertj:assertj-db:1.2.0'
+	testCompile 'org.dbunit:dbunit:2.5.1'
+	testCompile 'org.assertj:assertj-core:3.9.1'
+	//testCompile 'org.mockito:mockito-core:2.15.0'
+	testCompile 'org.jmockit:jmockit:1.38'
+}
