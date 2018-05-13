@@ -6,8 +6,6 @@ apply plugin: 'io.spring.dependency-management'
 
 sourceSets {
 	main.kotlin.srcDirs += 'src/monitor/kotlin'
-	test.kotlin.srcDirs += 'src/test-api/kotlin'
-	test.kotlin.srcDirs += 'src/test-integration/kotlin'
 }
 
 buildscript {
@@ -39,14 +37,5 @@ dependencies {
 	compile 'com.github.kittinunf.fuel:fuel:1.12.1'
 	compile 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.22.5'
 	compile 'org.springframework.boot:spring-boot-starter-actuator'
-	runtime 'mysql:mysql-connector-java:8.0.11'
-	testCompile 'com.h2database:h2'
-	testCompile("org.springframework.boot:spring-boot-starter-test:$spring_boot_version")
-	testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
-	testCompile 'com.ninja-squad:DbSetup-kotlin:2.1.0'
-	testCompile 'org.assertj:assertj-db:1.2.0'
-	testCompile 'org.dbunit:dbunit:2.5.1'
-	testCompile 'org.assertj:assertj-core:3.9.1'
-	//testCompile 'org.mockito:mockito-core:2.15.0'
-	testCompile 'org.jmockit:jmockit:1.38'
+	runtime 'com.h2database:h2'
 }

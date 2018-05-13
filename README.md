@@ -12,5 +12,16 @@ shutdownを行う
 monitorの送信の停止
 
 #DOING
+モニターの作りこみ
+　モニター開始
+　１０個成功したらモニタースレッドにshutdown開始を送りモニター送信を停止
+　shutdown
+  
+  
   
 #TODO
+shutdownの検証
+  kill
+  kill -9
+  docker stop
+  kubernetes
