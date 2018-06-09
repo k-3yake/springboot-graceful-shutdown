@@ -11,13 +11,15 @@ monitorの起動
 shutdownを行う
 monitorの送信の停止
 
+#DONE
+shutdownの検証
+  kill
+  kill -9
+  shutdonw endpoint
+
 #DOING
-モニターの作りこみ
-　モニター開始
-　１０個成功したらモニタースレッドにshutdown開始を送りモニター送信を停止
-　shutdown
-  
-  
+ gracefulの実装
+   https://github.com/gesellix/graceful-shutdown-spring-boot
   
 #TODO
 shutdownの検証

@@ -9,6 +9,9 @@ import (
 //	"log"
 	"fmt"
 	"time"
+	"bufio"
+	"os"
+	"bytes"
 )
 
 func main() {
@@ -21,7 +24,9 @@ func main() {
 		case response := <-responsedCh:
 			if(response == "OK"){
 				close(stopCh)
-				shutdownLocalJarSIGTERM()
+				//manualShutDown()
+				//shutdownLocalJarKill()
+				shutdownEndpoint()
 			}
 			isStopClosed = true
 		default:
@@ -70,18 +75,33 @@ func check(thisId int,result chan string, wg *sync.WaitGroup) {
 	defer resp.Body.Close()
 }
 
+func manualShutDown() {
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Print("Enter text: ")
+	text, _ := reader.ReadString('\n')
+	fmt.Println(text)
+}
+
 func shutdownLocalJarKill() {
+	println("shutdown")
+	cmd := exec.Command("sh", "-c", "kill $(pgrep -f springboot-graceful-shutdown.jar)")
+	stdoutStderr,_ := cmd.CombinedOutput()
+	fmt.Printf("%s\n", stdoutStderr)
+}
+
+func shutdownLocalJarForceKill() {
 	println("shutdown")
 	cmd := exec.Command("sh", "-c", "kill -9 $(pgrep -f springboot-graceful-shutdown.jar)")
 	stdoutStderr,_ := cmd.CombinedOutput()
 	fmt.Printf("%s\n", stdoutStderr)
 }
 
-func shutdownLocalJarSIGTERM() {
-	println("shutdown")
-	cmd := exec.Command("sh", "-c", "kill -15 $(pgrep -f springboot-graceful-shutdown.jar)")
-	stdoutStderr,_ := cmd.CombinedOutput()
-	fmt.Printf("%s\n", stdoutStderr)
+func shutdownEndpoint() {
+	println("shutdown by endpoint")
+	resp, err := http.Post("http://localhost:8080/actuator/shutdown", "", bytes.NewBuffer([]byte("")))
+	if (err != nil || resp.StatusCode != 200) {
+		panic("shutdonw失敗")
+	}
 }
 
 

@@ -1,0 +1,15 @@
+catalina:
+  threadpool:
+    execution:
+      timeout:
+        seconds: 60
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    shutdown:
+      enabled: true
+      sensitive: false
+
